@@ -1,7 +1,7 @@
 var express = require("express");
 var app=express();
 var path=require("path");
-var data=require("./data-server.js");
+var date=require("./data-service.js");
 var HTTP_PORT=process.env.PORT||8080;
 
 app.use(express.static('public'));
@@ -17,5 +17,29 @@ app.get("/", function(req, res){
 app.get("/about", function(req, res){
     res.sendFile(path.join(__dirname, "/views/about.html"))
 });
+
+app.get("/employees",(req,res)=>{
+    data.getAllEmployees().then((data)=>{
+        res.json(data);
+    });
+});
+
+
+app.get("/managers",(req,res)=>{
+    data.getManagers().then((data)=>{
+        res.json(data);
+    });
+});
+
+app.get("/departments",(req,res)=>{
+    data.getDepartments().then((data)=>{
+        res.json(data);
+    });
+});
+
+app.use((req, res)=>{
+    res.status(404).send("Page Not Found");
+});
+
 
 app.listen(HTTP_PORT, onHttpStart);
