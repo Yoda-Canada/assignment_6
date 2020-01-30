@@ -4,7 +4,8 @@ var path=require("path");
 var date=require("./data-service.js");
 var HTTP_PORT=process.env.PORT||8080;
 
-app.use(express.static('public'));
+app.use(express.static('public/css'));
+app.use(express.static('img')); 
 
 function onHttpStart(){
     console.log("Express http server listening on: "+HTTP_PORT);
@@ -43,7 +44,7 @@ app.use((req, res)=>{
 
 
 
-dataServer.initialize().then(()=>{
+data.initialize().then(()=>{
     app.listen(HTTP_PORT, onHttpStart);
 }).catch(err=>{
     console.log(err);

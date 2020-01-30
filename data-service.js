@@ -2,6 +2,7 @@ var filesystem=require("fs");
 var employees=[];
 var departments=[];
 module.exports.initialize=function(){
+    var promise=new Promise((resolve, reject)=>{
     try{
 
         filesystem.readFile('./data/employees.json',(err,data)=>{
@@ -15,13 +16,15 @@ module.exports.initialize=function(){
             if(err) throw err;
             departments=JSON.parse(data);
             console.log("read departments success.");
-        
         })
-    }catch(F){
+    }catch(e){
         reject("unable to read file");
     }
-
+        resolve("initialize success.");
+    })
+    return promise;
 }
+
 
 module.exports.getAllEmployees=function(){
     return new Promise((resolve, reject)=>{
@@ -30,7 +33,7 @@ module.exports.getAllEmployees=function(){
         }
         resolve(employees);
       })
-      
+      return promise;
 }
 
 module.exports.getManagers=function(){
@@ -47,7 +50,7 @@ module.exports.getManagers=function(){
         resolve(managerEmployees);
         
       })
-      
+      return promise;
 }
 
 module.exports.getDepartments=function(){
@@ -57,5 +60,5 @@ module.exports.getDepartments=function(){
         }
         resolve(departments);
       })
-      
+      return promise;
 }
