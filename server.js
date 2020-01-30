@@ -42,4 +42,9 @@ app.use((req, res)=>{
 });
 
 
-app.listen(HTTP_PORT, onHttpStart);
+
+dataServer.initialize().then(()=>{
+    app.listen(HTTP_PORT, onHttpStart);
+}).catch(err=>{
+    console.log(err);
+})
