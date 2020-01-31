@@ -22,24 +22,36 @@ app.get("/about", function(req, res){
 app.get("/employees",(req,res)=>{
     data.getAllEmployees().then((data)=>{
         res.json(data);
-    });
+    }).catch((err)=>{
+        console.log(err);
+        res.json(err);
+    }).catch((err) => {
+        console.log(err);
+        res.json(err);
+    })
 });
 
 
 app.get("/managers",(req,res)=>{
     data.getManagers().then((data)=>{
         res.json(data);
-    });
+    }).catch((err) => {
+        console.log(err);
+        res.json(err);
+    })
 });
 
 app.get("/departments",(req,res)=>{
     data.getDepartments().then((data)=>{
         res.json(data);
-    });
+    }).catch((err) => {
+        console.log(err);
+        res.json(err);
+    })
 });
 
 app.use((req, res)=>{
-    res.status(404).send("Page Not Found");
+    res.status(404).sendFile(path.join(__dirname,"/views/error404.html"));
 });
 
 

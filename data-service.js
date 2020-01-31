@@ -1,8 +1,9 @@
 var filesystem=require("fs");
 var employees=[];
 var departments=[];
+
 module.exports.initialize=function(){
-    var promise=new Promise((resolve, reject)=>{
+    var p=new Promise((resolve, reject)=>{
     try{
 
         filesystem.readFile('./data/employees.json',(err,data)=>{
@@ -22,7 +23,7 @@ module.exports.initialize=function(){
     }
         resolve("initialize success.");
     })
-    return promise;
+    return p;
 }
 
 
@@ -33,7 +34,7 @@ module.exports.getAllEmployees=function(){
         }
         resolve(employees);
       })
-      return promise;
+      
 }
 
 module.exports.getManagers=function(){
@@ -50,7 +51,7 @@ module.exports.getManagers=function(){
         resolve(managerEmployees);
         
       })
-      return promise;
+    
 }
 
 module.exports.getDepartments=function(){
@@ -60,5 +61,5 @@ module.exports.getDepartments=function(){
         }
         resolve(departments);
       })
-      return promise;
+      
 }
