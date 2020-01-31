@@ -3,32 +3,31 @@ var employees=[];
 var departments=[];
 
 module.exports.initialize=function(){
-    var p=new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject)=>{
     try{
 
         filesystem.readFile('./data/employees.json',(err,data)=>{
             if(err) throw err;
             employees=JSON.parse(data);
-            console.log("read employees success.");
-        
-        })
+            
+        });
 
         filesystem.readFile('./data/departments.json',(err,data)=>{
             if(err) throw err;
             departments=JSON.parse(data);
-            console.log("read departments success.");
-        })
-    }catch(e){
+        });
+    }catch(ex){
         reject("unable to read file");
     }
         resolve("initialize success.");
-    })
-    return p;
+    });
+    
 }
 
 
 module.exports.getAllEmployees=function(){
     return new Promise((resolve, reject)=>{
+        
         if(employees.length==0){
             reject("zero results returned");
         }

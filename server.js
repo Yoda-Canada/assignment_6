@@ -4,8 +4,7 @@ var path=require("path");
 var date=require("./data-service.js");
 var HTTP_PORT=process.env.PORT||8080;
 
-app.use(express.static('public/css'));
-app.use(express.static('img')); 
+app.use(express.static('public'));
 
 function onHttpStart(){
     console.log("Express http server listening on: "+HTTP_PORT);
@@ -23,9 +22,6 @@ app.get("/employees",(req,res)=>{
     data.getAllEmployees().then((data)=>{
         res.json(data);
     }).catch((err)=>{
-        console.log(err);
-        res.json(err);
-    }).catch((err) => {
         console.log(err);
         res.json(err);
     })
@@ -51,7 +47,7 @@ app.get("/departments",(req,res)=>{
 });
 
 app.use((req, res)=>{
-    res.status(404).sendFile(path.join(__dirname,"/views/error404.html"));
+    res.status(404).send("404 Page");
 });
 
 
