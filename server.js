@@ -1,7 +1,7 @@
 var express = require("express");
 var app=express();
 var path=require("path");
-var date=require("./data-service.js");
+var viewData=require("./data-service.js");
 var HTTP_PORT=process.env.PORT||8080;
 
 app.use(express.static('public'));
@@ -52,7 +52,7 @@ app.use((req, res)=>{
 
 
 
-data.initialize().then(()=>{
+viewData.initialize().then(()=>{
     app.listen(HTTP_PORT, onHttpStart);
 }).catch(err=>{
     console.log(err);
