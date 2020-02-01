@@ -32,7 +32,7 @@ div ul li{
 	background-color: #435;
 }
 		
-div ul li a{
+ul li a{
 	background-color: rgb(12, 130, 240);
 	color: rgb(235, 23, 23);
 	text-decoration: none;
