@@ -44,7 +44,7 @@ module.exports.getManagers=function(){
                 managerEmployees.push(employees[i]);
             }
         }
-        if(mangerEmployees.length==0){
+        if(managerEmployees.length==0){
             reject("zero results returned");
         }
         resolve(managerEmployees);
