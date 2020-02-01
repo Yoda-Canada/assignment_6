@@ -11,7 +11,7 @@ header{
 }
 
 title{
-    color: rgba(211, 30, 30, 0.788);
+    color: rgba(23, 66, 206, 0.788);
 }
 		
 nav{
@@ -32,15 +32,6 @@ div ul li{
 	background-color: #435;
 }
 		
-ul li a{
-	background-color: rgb(12, 130, 240);
-	color: rgb(235, 23, 23);
-	text-decoration: none;
-	padding:0 5px;	
-	font-weight:bold;
-	text-transform: uppercase;
-	font-size:13px;
-}
 
 P{
 	font-family: 'Pacifico', cursive;
