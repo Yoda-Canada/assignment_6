@@ -38,7 +38,7 @@ module.exports.getAllEmployees=function(){
 
 module.exports.getManagers=function(){
     return new Promise(function(resolve, reject){
-        var mangerEmployees=[];
+        var managerEmployees=[];
         for(var i=0; i<employees.length; i++){
             if(employees[i].isManager==true){
                 managerEmployees.push(employees[i]);
