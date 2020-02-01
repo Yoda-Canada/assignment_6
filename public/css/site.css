@@ -33,7 +33,7 @@ nav ul li{
 }
 		
 nav ul li a{
-	background-color: #435;
+	background-color: rgb(228, 30, 228);
 	color: #ddd;
 	text-decoration: none;
 	padding:0 5px;	
@@ -56,5 +56,5 @@ footer h2{
 }
 
 P{
-	font-family: 'Pacifico', cursive;
+	font-family: Arial, Helvetica, sans-serif;
 }
