@@ -6,7 +6,7 @@
 *
 * Name: __Tengzhen Zhao____ Student ID: __051440139_____ Date: __Jan 31,2020______
 *
-* Online (Heroku) Link: ________________________________________________________
+* Online (Heroku) Link: __https://protected-ridge-32775.herokuapp.com/___________
 *
 ********************************************************************************/ 
 var express = require("express");
@@ -27,6 +27,14 @@ app.get("/", function(req, res){
 
 app.get("/about", function(req, res){
     res.sendFile(path.join(__dirname, "/views/about.html"))
+});
+
+app.get("/employees/add", (req,res)=>{
+    res.sendFile(path.join(__dirname, "/views/addEmployee.html"))
+});
+
+app.get("/images/add", (req, res)=>{
+    res.sendFile(path.join(__dirname, "/views/addImage.html"))
 });
 
 app.get("/employees",(req,res)=>{
