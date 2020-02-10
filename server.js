@@ -11,6 +11,7 @@
 ********************************************************************************/ 
 var express = require("express");
 var multer=require("multer");
+var bodyParser = require('body-parser')
 var app=express();
 var path=require("path");
 var filesystem=require("fs");
@@ -41,13 +42,22 @@ app.post("/images/add", upload.single("imageFile"), (req, res) => {
   });
 
 app.get("/images", function(req, res){
-    
+
     filesystem.readdir(path.join(__dirname, imgPath), function(err, items){
         var img={images:[]};
         for(var i=0; i<items.length; i++)
             img.images.push(items[i]);
 
         res.json(img);
+    });
+});
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post("/employees/add", function(req, res){
+    dataSrv.addEmployee(req.body)
+    .then(() => {
+      res.redirect("/employees");
     });
 });
   
