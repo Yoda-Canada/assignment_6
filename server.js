@@ -24,16 +24,17 @@ function onHttpStart(){
     console.log("Express http server listening on: "+HTTP_PORT);
 }
 
+
 const storage=multer.diskStorage({
 
-    destination:"./public/images/uploaded",
-
+    destination:  "./public/images/uploaded",
+               
     filename: function (req, file, cb) {
 
         cb(null, Date.now() + path.extname(file.originalname));
 
     }
-})
+});
 
 const upload = multer({ storage: storage });
 
@@ -55,8 +56,8 @@ app.get("/images", function(req, res){
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/employees/add", function(req, res){
-    dataSrv.addEmployee(req.body)
-    .then(() => {
+    data.addEmployee(req.body)
+    .then(()=> {
       res.redirect("/employees");
     });
 });
@@ -78,6 +79,7 @@ app.get("/images/add", (req, res)=>{
     res.sendFile(path.join(__dirname, "/views/addImage.html"))
 });
 
+/*assignment 2
 app.get("/employees",(req,res)=>{
     data.getAllEmployees().then((data)=>{
         res.json(data);
@@ -85,7 +87,48 @@ app.get("/employees",(req,res)=>{
         console.log(err);
         res.json(err);
     })
+});*/
+
+app.get("/employees",(req,res)=>{
+    if(req.query.status){
+        data.getEmployeesByStatus(req.query.status).then((data)=>{
+        res.json(data);
+    }).catch((err)=>{
+        console.log(err);
+        res.json(err);
+    })
+}else if(req.query.department){
+    data.getEmployeesByDepartment(req.query.status).then((data)=>{
+        res.json(data);
+    }).catch((err)=>{
+        res.json(err);
+    })
+}else if (req.query.isManager) {
+    data.getEmployeesByManager(req.query.isManager).then((data) => {
+      res.json(data);
+    }).catch((err) => {
+      res.json(err);
+    })
+} else {
+    data.getAllEmployees().then((data) => {
+        res.json(data);
+      }).catch((err) => {
+        console.log(err);
+        res.json(err);
+      })
+  }
+
 });
+
+
+app.get("/employees/value", (req,res)=>{
+    data.getEmployeeByNum(req.params.num).then((data) => {
+      res.json(data);
+    }).catch((err) => {
+      console.log(err);
+      res.json(err);
+    })
+  });
 
 
 app.get("/managers",(req,res)=>{
