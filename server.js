@@ -44,7 +44,7 @@ app.post("/images/add", upload.single("imageFile"), (req, res) => {
 
 app.get("/images", function(req, res){
 
-    filesystem.readdir(path.join(__dirname, imgPath), function(err, items){
+    filesystem.readdir(path.join(__dirname, imgPath), (err, items)=>{
         var img={images:[]};
         for(var i=0; i<items.length; i++)
             img.images.push(items[i]);
