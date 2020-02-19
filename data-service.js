@@ -2,6 +2,98 @@ var filesystem=require("fs");
 var employees=[];
 var departments=[];
 
+module.exports.getEmployeesByStatus = function (staId) {
+  
+    var EmpSta = [];
+    var promise = new Promise((resolve, reject) => {
+      
+       for (var i=0; i < employees.length; i++){
+           if (employees[i].status == staId) {
+               EmpSta.push(employees[i]);
+           }
+       }
+
+       if(EmpSta.length === 0) {
+        var err = "getEmployeesByStatus error";
+        reject({message: err});
+       }  
+
+    resolve (EmpStap);
+    })
+    return promise;
+
+};
+
+module.exports.getEmployeesByDepartment = function (depId) {
+
+    var EmpDep = [];
+    var promise = new Promise((resolve, reject) => {
+      
+       for (var i=0; i < employees.length; i++){
+           if (employees[i].department == depId) {
+               EmpDep.push(employees[i]);
+           }
+       }
+
+       if(EmpDep.length === 0) {
+        var err = "getEmployeesByDepartment() error.";
+        reject({message: err});
+       }  
+
+    resolve (EmpDep);
+    })
+    return promise;
+
+};
+
+module.exports.getEmployeesByManager = function (BoolMana) {
+   
+    var EmpMana = [];
+    var promise = new Promise((resolve, reject) => {
+      
+       for (var i=0; i < employees.length; i++){
+           if (employees[i].isManager == BoolMana) {
+               EmpMana.push(employees[i]);
+           }
+       }
+
+       if(EmpMana.length === 0) {
+        var err = "getEmployeesByManager() error.";
+        reject({message: err});
+       }  
+
+    resolve (EmpMana);
+    })
+    return promise;
+
+};
+
+module.exports.getEmployeeByNum = function (number) {
+  
+      var EmpNum;
+      var promise = new Promise((resolve, reject) => {
+        
+         for (var i=0; i < employees.length; i++){
+             if (employees[i].employeeNum == number) {
+               
+                 EmpNum = employees[i];
+                 i = employees.length;
+             }
+         }
+  
+         if(EmpNum === "undefined") {
+          var err = "getEmployeesByNum() error.";
+          reject({message: err});
+         }  
+  
+      resolve (EmpNum);
+      })
+      return promise;
+  
+  };
+
+
+
 module.exports.initialize=function(){
     return new Promise((resolve, reject)=>{
     try{
