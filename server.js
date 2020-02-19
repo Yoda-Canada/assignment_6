@@ -24,7 +24,7 @@ function onHttpStart(){
     console.log("Express http server listening on: "+HTTP_PORT);
 }
 
-
+var imagePath="./public/images/uploaded"
 const storage=multer.diskStorage({
 
     destination:  "./public/images/uploaded",
@@ -40,7 +40,7 @@ const upload = multer({ storage: storage });
 
 app.get("/images", function(req, res){
 
-    filesystem.readdir(path.join(__dirname, imgPath), (err, items)=>{
+    filesystem.readdir(path.join(__dirname, imagePath), (err, items)=>{
         var img={images:[]};
         for(var i=0; i<items.length; i++)
             img.images.push(items[i]);
