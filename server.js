@@ -38,10 +38,6 @@ const storage=multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post("/images/add", upload.single("imageFile"), (req, res) => {
-    res.redirect("/images");
-  });
-
 app.get("/images", function(req, res){
 
     filesystem.readdir(path.join(__dirname, imgPath), (err, items)=>{
@@ -52,6 +48,12 @@ app.get("/images", function(req, res){
         res.json(img);
     });
 });
+
+
+app.post("/images/add", upload.single("imageFile"), (req, res) => {
+    res.redirect("/images");
+  });
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
