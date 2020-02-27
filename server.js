@@ -72,7 +72,8 @@ app.post("/employees/add", function(req, res){
   
 
 app.get("/", function(req, res){
-    res.render(path.join(__dirname, "/views/home.html"))
+    //res.sendFile(path.join(__dirname, "/views/home.html"))
+    res.render("home");
 });
 
 app.get("/about", function(req, res){
