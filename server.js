@@ -16,13 +16,19 @@ var app=express();
 var path=require("path");
 var filesystem=require("fs");
 var data=require("./data-service.js");
+var exphbs=require("express-handlebars");
 var HTTP_PORT=process.env.PORT||8080;
 
 app.use(express.static('public'));
 
+
 function onHttpStart(){
     console.log("Express http server listening on: "+HTTP_PORT);
 }
+
+app.engine('.hbs', exphbs({extname: '.hbs'}));
+
+app.set('view engine', '.hbs');
 
 var imagePath="./public/images/uploaded"
 const storage=multer.diskStorage({
@@ -66,7 +72,7 @@ app.post("/employees/add", function(req, res){
   
 
 app.get("/", function(req, res){
-    res.sendFile(path.join(__dirname, "/views/home.html"))
+    res.render(path.join(__dirname, "/views/home.html"))
 });
 
 app.get("/about", function(req, res){
