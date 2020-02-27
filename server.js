@@ -30,6 +30,14 @@ app.engine('.hbs', exphbs({extname: '.hbs'}));
 
 app.set('view engine', '.hbs');
 
+//This will add the property "activeRoute" to "app.locals" whenever the route changes,
+ //ie: if our route is "/employees/add", the app.locals.activeRoute value will be "/employees/add".
+app.use(function(req,res,next){
+    let route = req.baseUrl + req.path;
+    app.locals.activeRoute = (route == "/") ? "/" : route.replace(/\/$/, "");
+    next();
+    });
+
 var imagePath="./public/images/uploaded"
 const storage=multer.diskStorage({
 
