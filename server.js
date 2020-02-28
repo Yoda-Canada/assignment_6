@@ -171,14 +171,14 @@ app.get("/employees/value", (req,res)=>{
   });
 
 
-app.get("/managers",(req,res)=>{
+/*app.get("/managers",(req,res)=>{
     data.getManagers().then((data)=>{
         res.json(data);
     }).catch((err) => {
         console.log(err);
         res.json(err);
     })
-});
+});*/
 
 app.get("/departments",(req,res)=>{
     data.getDepartments().then((data)=>{
