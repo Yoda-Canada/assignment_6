@@ -26,7 +26,27 @@ function onHttpStart(){
     console.log("Express http server listening on: "+HTTP_PORT);
 }
 
-app.engine('.hbs', exphbs({extname: '.hbs'}));
+app.engine('.hbs', exphbs({
+    extname: '.hbs',
+    defaultLayout:'main',
+    helpers:{
+        navLink: function(url, options){
+            return '<li' +
+            ((url == app.locals.activeRoute) ? ' class="active" ' : '') + 
+            '><a href="' + url + '">' + options.fn(this) + '</a></li>';
+           },
+
+           equal: function (lvalue, rvalue, options) {
+            if (arguments.length < 3)
+            throw new Error("Handlebars Helper equal needs 2 parameters");
+            if (lvalue != rvalue) {
+            return options.inverse(this);
+            } else {
+            return options.fn(this);
+            }
+           }         
+    }
+}));
 
 app.set('view engine', '.hbs');
 
