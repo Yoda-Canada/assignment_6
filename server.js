@@ -183,10 +183,10 @@ app.get("/employees/value", (req,res)=>{
 
 app.get("/departments",(req,res)=>{
     data.getDepartments().then((data)=>{
-        res.json(data);
+        res.render("departments", {departments: data});
     }).catch((err) => {
         console.log(err);
-        res.json(err);
+        res.render({message: "no results"});
     })
 });
 
