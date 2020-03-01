@@ -79,7 +79,8 @@ app.get("/images", function(req, res){
         for(var i=0; i<items.length; i++)
             img.images.push(items[i]);
 
-        res.json(img);
+        //res.json(img);--assignment 3
+        res.render("images",img);
     });
 });
 
@@ -132,29 +133,29 @@ app.get("/employees",(req,res)=>{
 app.get("/employees",(req,res)=>{
     if(req.query.status){
         data.getEmployeesByStatus(req.query.status).then((data)=>{
-        res.json(data);
+        res.render("employees",{employees: data});
     }).catch((err)=>{
         console.log(err);
-        res.json(err);
+        res.render({message: "no results"});
     })
 }else if(req.query.department){
     data.getEmployeesByDepartment(req.query.status).then((data)=>{
-        res.json(data);
+        res.render("employees",{employees: data});
     }).catch((err)=>{
-        res.json(err);
+        res.render({message: "no results"});
     })
 }else if (req.query.isManager) {
     data.getEmployeesByManager(req.query.isManager).then((data) => {
-      res.json(data);
+      res.render("employees",{employees: data});
     }).catch((err) => {
-      res.json(err);
+      res.render({message: "no results"});
     })
 } else {
     data.getAllEmployees().then((data) => {
-        res.json(data);
+        res.render("employees",{employees: data});
       }).catch((err) => {
         console.log(err);
-        res.json(err);
+        res.render({message: "no results"});
       })
   }
 
