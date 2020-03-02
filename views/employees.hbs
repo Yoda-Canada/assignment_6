@@ -19,7 +19,6 @@
 
    <tbody>     
    {{#each employees}}
-   <!--<div class="col-md-4">-->
     <tr>
 
         <td>{{employeeNum}}</td>
@@ -32,16 +31,13 @@
         <td>{{hireDate}}</td>
 
     </tr>
-   <!--</div>--> 
    {{else}}
-   <!--<div class="col-md-12 text-center">-->
        <strong>No Employees Available</strong>
-   <!--</div>-->
    {{/each}}
    </tbody> 
 
 </table>
-</div> <!-- end class table-responsive-->
+</div> 
 </div>
   {{#unless employees}}
   <div class="col-md-12 text-center">
