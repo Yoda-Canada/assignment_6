@@ -170,3 +170,23 @@ module.exports.addEmployee=function(employeeData){
         
     })
 }
+
+module.exports.updateEmployee = function (employeeData) {
+
+    var found = false;
+    var promise = new Promise((resolve, reject) => {
+        
+        for (var i=0; i < employees.length; i++){
+            if (employees[i].employeeNum == employeeData.employeeNum) {
+                employees[i] = employeeData;
+                found = true;
+            }
+        }
+        if(found === false) {
+         var err = "Cannot find employee to update.";
+         reject({message: err});
+        }  
+        resolve (employees);
+     })
+     return promise;
+};

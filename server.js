@@ -180,7 +180,11 @@ app.get("/employees/value", (req,res)=>{
     })
   });  
 
-
+  app.post("/employee/update", (req, res) => {
+    console.log(req.body);
+    res.redirect("/employees");
+   });
+   
 
 /*app.get("/managers",(req,res)=>{
     data.getManagers().then((data)=>{
