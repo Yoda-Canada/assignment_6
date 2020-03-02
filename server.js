@@ -161,7 +161,7 @@ app.get("/employees",(req,res)=>{
 
 });
 
-
+/*assignment 3
 app.get("/employees/value", (req,res)=>{
     data.getEmployeeByNum(req.params.num).then((data) => {
       res.json(data);
@@ -169,7 +169,17 @@ app.get("/employees/value", (req,res)=>{
       console.log(err);
       res.json(err);
     })
-  });
+  });       */
+
+  app.get("/employees/:empNum", (req,res)=>{
+    data.getEmployeeByNum(req.params.num).then((data) => {
+      res.render("employee", { employee: data });
+    }).catch((err) => {
+      console.log(err);
+      res.render("employee",{message:"no results"});
+    })
+  });  
+
 
 
 /*app.get("/managers",(req,res)=>{
