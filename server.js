@@ -171,7 +171,8 @@ app.get("/employees/value", (req,res)=>{
     })
   });       */
 
-  app.get("/employee/: employeeNum", (req,res)=>{
+  /*
+  app.get("/employee/employeeNum", (req,res)=>{
     data.getEmployeeByNum(req.params.num).then((data) => {
       res.render("employee", { employee: data });
     }).catch((err) => {
@@ -184,7 +185,7 @@ app.get("/employees/value", (req,res)=>{
     console.log(req.body);
     res.redirect("/employees");
    });
-   
+   */
 
 /*app.get("/managers",(req,res)=>{
     data.getManagers().then((data)=>{
