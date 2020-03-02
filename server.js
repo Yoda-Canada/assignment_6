@@ -171,7 +171,7 @@ app.get("/employees/value", (req,res)=>{
     })
   });       */
 
-  app.get("/employees/:empNum", (req,res)=>{
+  app.get("/employee/: num", (req,res)=>{
     data.getEmployeeByNum(req.params.num).then((data) => {
       res.render("employee", { employee: data });
     }).catch((err) => {
