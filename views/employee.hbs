@@ -82,36 +82,12 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Status:</label><br />
-                           <!-- <label  class="checkbox-inline">
+                            <label  class="checkbox-inline">
                                 <input type="radio" id="statusFT" name="status" {{#equal employee.status "Full Time" }}checked{{/equal}} value="Full Time" /> Full Time
                             </label>
                             <label class="checkbox-inline">
                                 <input type="radio" id="statusPT" name="status"  {{#equal employee.status "Part Time" }}checked{{/equal}} value="Part Time" /> Part Time
-                            </label>   -->
-                              {{#equal data.status "Full Time"}}
-                                <label  class="checkbox-inline">
-                                    <input type="radio" id="statusFulltime" name="status" value="Full Time" checked="" /> Full Time
-                                </label>
-                                <label  class="checkbox-inline">
-                                    <input type="radio" id="statusParttime" name="status" value="Part Time"  /> Part Time
-                                </label>
-                                {{/equal}}
-                                {{#equal data.status "Part Time"}}
-                                <label  class="checkbox-inline">
-                                    <input type="radio" id="statusFulltime" name="status" value="Full Time"  /> Full Time
-                                </label>
-                                <label  class="checkbox-inline">
-                                    <input type="radio" id="statusParttime" name="status" value="Part Time" checked="" /> Part Time
-                                </label>
-                                {{/equal}}
-                                {{#unless data.status}}
-                                <label  class="checkbox-inline">
-                                    <input type="radio" id="statusFulltime" name="status" value="Full Time"  /> Full Time
-                                </label>
-                                <label  class="checkbox-inline">
-                                    <input type="radio" id="statusParttime" name="status" value="Part Time" /> Part Time
-                                </label>
-                                {{/unless}}
+                            </label>      
                         </div>
                     </div>
                     <div class="col-md-3">
