@@ -161,7 +161,7 @@ app.get("/employees",(req,res)=>{
       res.render("employee",{message:"no results"});
     })
   }); 
-/*
+
   app.post("/employee/update", (req, res) => {
     
     data.updateEmployee(req.body)
@@ -172,7 +172,7 @@ app.get("/employees",(req,res)=>{
             console.log (err);
         })
   });
-   */
+   
 
 app.get("/departments",(req,res)=>{
     data.getDepartments().then((data)=>{
