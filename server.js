@@ -139,7 +139,7 @@ app.get("/employees",(req,res)=>{
         res.render({message: "no results"});
     })
 }else if(req.query.department){
-    data.getEmployeesByDepartment(req.query.status).then((data)=>{
+    data.getEmployeesByDepartment(req.query.department).then((data)=>{
         res.render("employees",{employees: data});
     }).catch((err)=>{
         res.render({message: "no results"});
@@ -171,21 +171,28 @@ app.get("/employees/value", (req,res)=>{
     })
   });       */
 
-  /*
-  app.get("/employee/employeeNum", (req,res)=>{
-    data.getEmployeeByNum(req.params.employeeNum).then((data) => {
+  app.get("/employee/:num", function (req, res) {
+    
+    data.getEmployeeByNum(req.params.num)
+    .then((data) => {
       res.render("employee", { employee: data });
-    }).catch((err) => {
-      console.log(err);
+    })
+    .catch((err) => {
       res.render("employee",{message:"no results"});
     })
-  });  
+  }); 
 
   app.post("/employee/update", (req, res) => {
-    console.log(req.body);
-    res.redirect("/employees");
-   });
-   */
+    
+    data.updateEmployee(req.body)
+        .then(() => {
+             res.redirect("/employees");
+        })
+        .catch((err)=>{
+            console.log (err);
+        })
+  });
+   
 
 /*app.get("/managers",(req,res)=>{
     data.getManagers().then((data)=>{
