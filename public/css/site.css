@@ -16,7 +16,7 @@ title{
 		
 nav{
 	padding:8px;
-	background-color: #439;
+	background-color: rgb(241, 30, 30);
 }
 		
 nav ul{
@@ -29,7 +29,7 @@ nav ul{
 div ul li{
 	
 	display:inline-block;
-	background-color: rgb(250, 60, 12);
+	background-color: rgba(13, 168, 240, 0.247);
 }
 		
 
