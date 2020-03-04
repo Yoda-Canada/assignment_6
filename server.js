@@ -50,8 +50,6 @@ app.engine('.hbs', exphbs({
 
 app.set('view engine', '.hbs');
 
-//This will add the property "activeRoute" to "app.locals" whenever the route changes,
- //ie: if our route is "/employees/add", the app.locals.activeRoute value will be "/employees/add".
 app.use(function(req,res,next){
     let route = req.baseUrl + req.path;
     app.locals.activeRoute = (route == "/") ? "/" : route.replace(/\/$/, "");
@@ -163,7 +161,7 @@ app.get("/employees",(req,res)=>{
       res.render("employee",{message:"no results"});
     })
   }); 
-
+/*
   app.post("/employee/update", (req, res) => {
     
     data.updateEmployee(req.body)
@@ -174,7 +172,7 @@ app.get("/employees",(req,res)=>{
             console.log (err);
         })
   });
-   
+   */
 
 app.get("/departments",(req,res)=>{
     data.getDepartments().then((data)=>{
