@@ -120,15 +120,6 @@ app.get("/images/add", (req, res)=>{
     res.render("addImage");
 });
 
-/*assignment 2
-app.get("/employees",(req,res)=>{
-    data.getAllEmployees().then((data)=>{
-        res.json(data);
-    }).catch((err)=>{
-        console.log(err);
-        res.json(err);
-    })
-});*/
 
 app.get("/employees",(req,res)=>{
     if(req.query.status){
@@ -161,15 +152,6 @@ app.get("/employees",(req,res)=>{
 
 });
 
-/*assignment 3
-app.get("/employees/value", (req,res)=>{
-    data.getEmployeeByNum(req.params.value).then((data) => {
-      res.json(data);
-    }).catch((err) => {
-      console.log(err);
-      res.json(err);
-    })
-  });       */
 
   app.get("/employee/:num", function (req, res) {
     
@@ -193,15 +175,6 @@ app.get("/employees/value", (req,res)=>{
         })
   });
    
-
-/*app.get("/managers",(req,res)=>{
-    data.getManagers().then((data)=>{
-        res.json(data);
-    }).catch((err) => {
-        console.log(err);
-        res.json(err);
-    })
-});*/
 
 app.get("/departments",(req,res)=>{
     data.getDepartments().then((data)=>{
