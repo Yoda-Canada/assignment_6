@@ -163,7 +163,7 @@ app.get("/employees",(req,res)=>{
 
 /*assignment 3
 app.get("/employees/value", (req,res)=>{
-    data.getEmployeeByNum(req.params.num).then((data) => {
+    data.getEmployeeByNum(req.params.value).then((data) => {
       res.json(data);
     }).catch((err) => {
       console.log(err);
@@ -173,7 +173,7 @@ app.get("/employees/value", (req,res)=>{
 
   /*
   app.get("/employee/employeeNum", (req,res)=>{
-    data.getEmployeeByNum(req.params.num).then((data) => {
+    data.getEmployeeByNum(req.params.employeeNum).then((data) => {
       res.render("employee", { employee: data });
     }).catch((err) => {
       console.log(err);
