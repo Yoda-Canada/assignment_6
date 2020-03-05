@@ -53,7 +53,7 @@ module.exports.getEmployeesByManager = function (BoolMana) {
       
        for (var i=0; i < employees.length; i++){
            if (employees[i].isManager == BoolMana) {
-               EmpMana.push(employees[i]);
+               EmpMana.push(employees[i].employeeManagerNum);
            }
        }
 
