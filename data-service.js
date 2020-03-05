@@ -18,7 +18,7 @@ module.exports.getEmployeesByStatus = function (staId) {
         reject({message: err});
        }  
 
-    resolve (EmpStap);
+    resolve (EmpSta);
     })
     return promise;
 
