@@ -46,22 +46,17 @@ module.exports.getEmployeesByDepartment = function (depId) {
 
 };
 
-module.exports.getEmployeesByManager = function (isManager) {
+module.exports.getEmployeesByManager = function (BoolMana) {
    
     var EmpM = [];
     var promise = new Promise((resolve, reject) => {
       
-       //for (var i=0; i < employees.length; i++){
-         //  if (employees[i].isManager == BoolMana) {
-           //    EmpM.push(employees[i].employeeManagerNum);
-           //}
-       //}
        for (var i=0; i < employees.length; i++){
-        if (employees[i].employeeManagerNum == isManager) {
-            EmpM.push(employees[i]);
-        }
-    }
-
+           if (employees[i].isManager == BoolMana) {
+               EmpM.push(employees[i].employeeManagerNum);
+           }
+       }
+       
        if(EmpM.length === 0) {
         var err = "getEmployeesByManager() error.";
         reject({message: err});
