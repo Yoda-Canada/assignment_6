@@ -133,8 +133,8 @@ app.get("/employees",(req,res)=>{
     }).catch((err)=>{
         res.render({message: "no results"});
     })
-}else if (req.query.isManager) {
-    data.getEmployeesByManager(req.query.isManager).then((data) => {
+}else if (req.query.manager) {
+    data.getEmployeesByManager(req.query.manager).then((data) => {
       res.render("employees",{employees: data});
     }).catch((err) => {
       res.render({message: "no results"});

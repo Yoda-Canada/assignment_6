@@ -46,14 +46,14 @@ module.exports.getEmployeesByDepartment = function (depId) {
 
 };
 
-module.exports.getEmployeesByManager = function (BoolMana) {
+module.exports.getEmployeesByManager = function (manager) {
    
     var EmpM = [];
     var promise = new Promise((resolve, reject) => {
       
        for (var i=0; i < employees.length; i++){
-           if (employees[i].isManager == BoolMana) {
-               EmpM.push(employees[i].employeeManagerNum);
+           if (employees[i].employeeManagerNum == manager) {
+               EmpM.push(employees[i]);
            }
        }
        
