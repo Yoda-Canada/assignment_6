@@ -1,6 +1,16 @@
 var filesystem=require("fs");
 var employees=[];
 var departments=[];
+const Sequelize = require('sequelize');
+
+var sequelize = new Sequelize('dcn3nqsi864ec4', 'ugypnljmcgxhtf', '6559aef653e89b414543cdc950b5501fedd5f95060e6017b0ca0aac96e5542f8', {
+    host: 'ec2-35-174-88-65.compute-1.amazonaws.com',
+    dialect: 'postgres',
+    port: 5432,
+    dialectOptions: {
+    ssl: true
+    }
+   });
 
 module.exports.getEmployeesByStatus = function (staId) {
   
