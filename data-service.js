@@ -3,8 +3,8 @@ var employees=[];
 var departments=[];
 const Sequelize = require('sequelize');
 
-var sequelize = new Sequelize('dbp7qkunmq4j95', 'psbyomygbqnqit', '7855ee754c0769bef1663d9edb8b59569840c1b7e8420fef4133d969d8ce4cf4', {
-    host: 'ec2-52-23-14-156.compute-1.amazonaws.com',
+var sequelize = new Sequelize('dd51gmicf0cskm', 'juhqoiyzbqvqov', '7ea6a1c6debc3d7799062ff79586a682c542fc645330085f48f6f71a68f31fb7', {
+    host: 'ec2-3-91-112-166.compute-1.amazonaws.com',
     dialect: 'postgres',
     port: 5432,
     dialectOptions: {
