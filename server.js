@@ -232,7 +232,9 @@ app.get("/employees",(req,res)=>{
     } else {
     res.render("employee", { viewData: viewData }); // render the "employee" view
     }
-    });
+    }).catch(()=>{
+        res.status(500).send("Unable to get Employee");
+    })
    });
 
   app.get("/department/:num", (req,res)=>{
@@ -254,10 +256,21 @@ app.get("/employees",(req,res)=>{
         .then(() => {
              res.redirect("/employees");
         })
-        .catch((err)=>{
-            console.log (err);
+        .catch(()=>{
+            res.status(500).send("Unable to Update Employee");
         })
   });
+
+  app.get("/employees/delete/:num", (req,res)=>{
+    var num = req.params.num;
+    datas.deleteEmployeeByNum(num)
+    .then(()=>{
+        res.redirect("/employees");
+    })
+    .catch(()=>{
+        res.status(500).send("Unable to Remove Employee / Employee not found)");
+    })
+});
   
    
 

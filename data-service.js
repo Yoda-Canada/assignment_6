@@ -269,3 +269,17 @@ module.exports.getDepartmentById = function (num){
         })
     });
 };
+
+module.exports.deleteEmployeeByNum = function(num){
+    return new Promise(function(resolve,reject){
+        Employees.destroy({
+            where:{employeeNum:num}
+        })
+        .then(()=>{
+            resolve("destroyed an employee");
+        })
+        .catch(()=>{
+            reject("destroy employee was rejected");
+        })
+    })
+}
