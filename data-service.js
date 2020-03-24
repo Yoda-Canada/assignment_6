@@ -215,3 +215,57 @@ module.exports.updateEmployee = function(employeeData){
     });
 };
 
+module.exports.addDepartment = function(departmentData){
+    return new Promise(function (resolve, reject) {
+        for (const prop in departmentData) {
+            if (departmentData[prop] == "") departmentData[prop] = null;
+        };
+        Department.create({
+            departmentId: departmentData.departmentId,
+            departmentName: departmentData.departmentName
+        })
+        .then(()=>{
+            console.log("successfully created a new department");
+            resolve(Department[1]);
+        })
+        .catch(()=>{
+            reject("unable to create department");
+        });   
+    });
+};
+
+module.exports.updateDepartment = function(departmentData){
+    return new Promise(function (resolve, reject) {
+        for (const prop in departmentData) {
+            if (departmentData[prop] == "") departmentData[prop] = null;
+        };
+        Department.update(
+        {
+            departmentId: departmentData.departmentId,
+            departmentName: departmentData.departmentName
+        },
+        {
+            where:{departmentId:departmentData.departmentId}
+        })
+        .then(()=>{
+            console.log("successfully update a department");
+            resolve(Department);
+        })
+        .catch(()=>{
+            reject("unable to update department");
+        });   
+    });
+};
+module.exports.getDepartmentById = function (num){
+    return new Promise(function (resolve, reject) {
+        Department.findAll({
+            where:{departmentId:num}
+        })
+        .then((data)=>{
+            resolve(data[0]);
+        })
+        .catch(()=>{
+            reject("no department returned");
+        })
+    });
+};
