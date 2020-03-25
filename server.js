@@ -277,7 +277,7 @@ app.get("/employees",(req,res)=>{
 app.get("/departments",(req,res)=>{
     data.getDepartments().then((data)=>{
         if (data.length > 0)
-            res.render("departments", {departments: data});
+            res.render("departments", {departments: data.map(value=>value.dataValues)});
         else 
             res.render("departments",{message: "no results"});   
     }).catch((err) => {
