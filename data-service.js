@@ -263,12 +263,16 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     
     module.exports.updateDepartment = function(departmentData){
         return new Promise(function (resolve, reject) {
-            for (const prop in departmentData) {
-                if (departmentData[prop] == "") departmentData[prop] = null;
-            };
+           // for (const prop in departmentData) {
+               // if (departmentData[prop] == "") departmentData[prop] = null;
+            //};
+
+            for (var item in departmentData) {
+                 if (item == "") item = null;
+             };
             Departments.update(
             {
-                departmentId: departmentData.departmentId,
+                
                 departmentName: departmentData.departmentName
             },
             {
