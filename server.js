@@ -142,7 +142,7 @@ app.post("/departments/add", function(req, res) {
 });
 
 // setup a post 'route' to update department
-app.post("/department/update", (req, res) => {
+app.post("/departments/update", (req, res) => {
     data.updateDepartment(req.body)
     .then(()=>{res.redirect("/departments");})
     .catch( ()=>{
@@ -154,7 +154,7 @@ app.get("/employees",(req,res)=>{
     if(req.query.status){
         data.getEmployeesByStatus(req.query.status).then((data)=>{
         if(data.length>0)
-            res.render("employees",{employees: data});
+            res.render("employees",{employees: data.map(value=>value.dataValues)});
         else
             res.render("employees",{ message: "no results" });
     }).catch((err)=>{
@@ -164,7 +164,7 @@ app.get("/employees",(req,res)=>{
 }else if(req.query.department){
     data.getEmployeesByDepartment(req.query.department).then((data)=>{
         if(data.length>0) 
-            res.render("employees",{employees: data});
+            res.render("employees",{employees: data.map(value=>value.dataValues)});
         else
             res.render("employees",{ message: "no results" });
     }).catch((err)=>{
@@ -173,7 +173,7 @@ app.get("/employees",(req,res)=>{
 }else if (req.query.manager) {
     data.getEmployeesByManager(req.query.manager).then((data) => {
         if(data.length>0) 
-            res.render("employees",{employees: data});
+            res.render("employees",{employees: data.map(value=>value.dataValues)});
         else
             res.render("employees",{ message: "no results" });   
     }).catch((err) => {
@@ -181,7 +181,7 @@ app.get("/employees",(req,res)=>{
     })
 } else {
     data.getAllEmployees().then((data) => {
-        res.render("employees",{employees: data});
+        res.render("employees",{employees: data.map(value=>value.dataValues)});
       }).catch((err) => {
         console.log(err);
         res.render({message: "no results"});
