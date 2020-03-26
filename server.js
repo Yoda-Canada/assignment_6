@@ -144,7 +144,7 @@ app.post("/departments/add", function(req, res) {
 // setup a post 'route' to update department
 app.post("/department/update", (req, res) => {
     data.updateDepartment(req.body)
-    .then(()=>{res.redirect("/department");})
+    .then(()=>{res.redirect("/departments");})
     .catch( ()=>{
         res.status(500).send("Unnable to update department");
     })
