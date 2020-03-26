@@ -263,7 +263,7 @@ app.get("/employees",(req,res)=>{
 
   app.get("/employees/delete/:num", (req,res)=>{
     var num = req.params.num;
-    datas.deleteEmployeeByNum(num)
+    data.deleteEmployeeByNum(num)
     .then(()=>{
         res.redirect("/employees");
     })
