@@ -255,7 +255,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             })
             .then(()=>{
                 console.log("successfully created a new department");
-                resolve(Department);
+                resolve(Department[1]);
             })
             .catch(()=>{
                 reject("unable to create department");
