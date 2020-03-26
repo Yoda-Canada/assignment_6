@@ -292,12 +292,12 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
                         departmentData[i] = null;
                     }
                 }
-                Departments.update({
+                Department.update({
                     departmentName: departmentData.departmentName
                 }, { where: {
                     departmentId: departmentData.departmentId
                 }}).then(() =>{
-                    resolve(Departments);
+                    resolve(Department);
                 }).catch((err) => {
                     reject("unable to update department");
                 });
