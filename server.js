@@ -202,7 +202,42 @@ app.get("/employees",(req,res)=>{
     })
   }); */
 
-  app.get("/employee/:num", (req, res) => {
+ /* app.get("/employee/:num", (req, res) => {
+    // initialize an empty object to store the values
+    let viewData = {};
+    data.getEmployeeByNum(req.params.num).then((data) => {
+    if (data) {
+    viewData.employee = data; //store employee data in the "viewData" object as "employee"
+    } else {
+    viewData.employee = null; // set employee to null if none were returned
+    }
+    }).catch(() => {
+    viewData.employee = null; // set employee to null if there was an error
+    }).then(data.getDepartments)
+    .then((data) => {
+    viewData.departments = data; // store department data in the "viewData" object as "departments"
+    // loop through viewData.departments and once we have found the departmentId that matches
+    // the employee's "department" value, add a "selected" property to the matching
+    // viewData.departments object
+    for (let i = 0; i < viewData.departments.length; i++) {
+    if (viewData.departments[i].departmentId == viewData.employee.department) {
+    viewData.departments[i].selected = true;
+    }
+    }
+    }).catch(() => {
+    viewData.departments = []; // set departments to empty if there was an error
+    }).then(() => {
+    if (viewData.employee == null) { // if no employee - return an error
+    res.status(404).send("Employee Not Found");
+    } else {
+    res.render("employee", { viewData: viewData }); // render the "employee" view
+    }
+    }).catch(()=>{
+        res.status(500).send("Unable to get Employee");
+    })
+   });*/
+
+   app.get("/employee/:num", (req, res) => {
     // initialize an empty object to store the values
     let viewData = {};
     data.getEmployeeByNum(req.params.num).then((data) => {
