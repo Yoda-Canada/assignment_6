@@ -261,7 +261,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
         });
     };
     
-    module.exports.updateDepartment = function(departmentData){
+    /*module.exports.updateDepartment = function(departmentData){
         return new Promise(function (resolve, reject) {
             for (const prop in departmentData) {
                 if (departmentData[prop] == "") departmentData[prop] = null;
@@ -282,7 +282,30 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
                 reject("unable to update department");
             });   
         });
-    };
+    };*/
+
+    module.exports.updateDepartment = function(departmentData) {
+        return new Promise(function(resolve, reject) {
+            sequelize.sync().then(() => {
+                for(let i in departmentData){
+                    if(departmentData[i] == "") {
+                        departmentData[i] = null;
+                    }
+                }
+                Departments.update({
+                    departmentName: departmentData.departmentName
+                }, { where: {
+                    departmentId: departmentData.departmentId
+                }}).then(() =>{
+                    resolve(Departments);
+                }).catch((err) => {
+                    reject("unable to update department");
+                });
+            }).catch(() => {
+                reject("unable to update department");
+            });
+        });
+    }
 
     module.exports.deleteDepartmentById = function(id) {
         return new Promise(function(resolve, reject) {
