@@ -142,7 +142,7 @@ app.post("/departments/add", function(req, res) {
 });
 
 // setup a post 'route' to update department
-app.post("/department/update", (req, res) => {
+app.post("/departments/update", (req, res) => {
     data.updateDepartment(req.body)
     .then(()=>{res.redirect("/departments");})
     .catch( ()=>{
@@ -241,7 +241,9 @@ app.get("/employees",(req,res)=>{
     var num = req.params.num;
     data.getDepartmentById(num)
     .then((data)=>{
-        res.render("department",{department:data}); 
+        if(data==null)
+            res.status(404).send("Department not found");
+        else{res.render("department",{department:data}); }
     })
     .catch(()=>{
         res.status(404).send("Department Not Found"); 
