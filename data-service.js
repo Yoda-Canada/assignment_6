@@ -283,6 +283,32 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             });   
         });
     };
+
+    module.exports.deleteDepartmentById = function(id) {
+        return new Promise(function(resolve, reject) {
+            sequelize.sync().then(() => {
+                    resolve(Departments.destroy({
+                        where:{
+                            employeeNum: empNum
+                        }}));
+            }).catch((err) => {
+                reject();
+            });
+        });
+    }
+    
+    module.exports.deleteEmployeeById = function(id) {
+        return new Promise(function(resolve, reject) {
+            sequelize.sync().then(() => {
+                    resolve(Employees.destroy({
+                        where:{
+                            employeeNum: empNum
+                        }}));
+            }).catch((err) => {
+                reject();
+            });
+        });
+    }
     
     /*module.exports.initialize = function (){
         return new Promise(function (resolve, reject) {
