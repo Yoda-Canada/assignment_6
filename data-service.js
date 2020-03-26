@@ -22,7 +22,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     });
 
 
-    var Employee = sequelize.define('Employee', {
+    var Employees = sequelize.define('Employee', {
         employeeNum: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -43,7 +43,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
         department: Sequelize.INTEGER,
         hireDate: Sequelize.STRING
     });
-    var Department = sequelize.define('Department', {
+    var Departments = sequelize.define('Department', {
         departmentId: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -55,9 +55,9 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     module.exports.initialize = function (){
         return new Promise(function (resolve, reject) {
             sequelize.sync()
-            .then((Employee)=>{
+            .then((Employees)=>{
                 resolve("have sync the database");
-            }).then((Department)=>{
+            }).then((Departments)=>{
                 resolve("have sync the database");
             })
             .catch(()=>{
@@ -70,7 +70,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     module.exports.getAllEmployees = function (){
         return new Promise(function (resolve, reject) {
             sequelize.sync().then(() => {
-                resolve(Employee.findAll());
+                resolve(Employees.findAll());
             })
             .catch(()=>{
                 reject("no employee returned");
@@ -81,7 +81,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     module.exports.getEmployeesByStatus = function (status){
         return new Promise(function (resolve, reject) {
             sequelize.sync().then(() => {
-                resolve(Employee.findAll({
+                resolve(Employees.findAll({
                     where:{
                         status: status
                     }}));
@@ -95,7 +95,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     module.exports.getEmployeesByDepartment = function (department){
         return new Promise(function (resolve, reject) {
             sequelize.sync().then(() => {
-                resolve(Employee.findAll({
+                resolve(Employees.findAll({
                     where:{
                         department: department
                 }}));
@@ -109,7 +109,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     module.exports.getEmployeesByManager = function (manager){
         return new Promise(function (resolve, reject) {
             sequelize.sync().then(() => {
-                resolve(Employee.findAll({
+                resolve(Employees.findAll({
                     where:{
                         employeeManagerNum: manager
                     }
@@ -124,7 +124,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     module.exports.getEmployeeByNum = function (num){
         return new Promise(function (resolve, reject) {
             sequelize.sync().then(() => {
-                resolve(Employee.findAll({
+                resolve(Employees.findAll({
                     where:{
                         employeeNum: num
                     }
@@ -143,7 +143,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             for (const prop in employeeData) {
                 if (employeeData[prop] == "") employeeData[prop] = null;
             };
-            resolve(Employee.create({
+            resolve(Employees.create({
                 employeeNum: employeeData.employeeNum,
                 firstName: employeeData.firstName,
                 lastName: employeeData.lastName,
@@ -176,7 +176,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             for (const prop in employeeData) {
                 if (employeeData[prop] == "") employeeData[prop] = null;
             };
-            resolve(Employee.update(
+            resolve(Employees.update(
             {
                 employeeNum: employeeData.employeeNum,
                 firstName: employeeData.firstName,
@@ -221,7 +221,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     module.exports.getDepartments = function(){
         return new Promise(function (resolve, reject) {
             sequelize.sync().then(() => {
-                resolve(Department.findAll());
+                resolve(Departments.findAll());
             })
             .catch(()=>{
                 reject("no department returned");
@@ -232,7 +232,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
     module.exports.getDepartmentById = function (num){
         return new Promise(function (resolve, reject) {
             sequelize.sync().then(() => {
-                resolve(Department.findAll({
+                resolve(Departments.findAll({
                 where:{departmentId:num}
             }));
           })
@@ -248,13 +248,13 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             for (const prop in departmentData) {
                 if (departmentData[prop] == "") departmentData[prop] = null;
             }
-            Department.create({
+            Departments.create({
                 departmentId: departmentData.departmentId,
                 departmentName: departmentData.departmentName
             })
             .then(()=>{
                 console.log("successfully created a new department");
-                resolve(Department);
+                resolve(Departments);
             })
             .catch(()=>{
                 reject("unable to create department");
@@ -272,7 +272,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
                 if (departmentData[prop] == "") departmentData[prop] = null;
             }
 
-            Department.update(
+            Departments.update(
             {
                 
                 departmentName: departmentData.departmentName
@@ -282,7 +282,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             })
             .then(()=>{
                 console.log("successfully update a department");
-                resolve(Department);
+                resolve(Departments);
             })
             .catch(()=>{
                 reject("unable to update department");
@@ -297,7 +297,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
  module.exports.deleteDepartmentById = function(id) {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(() => {
-                resolve(Department.destroy({
+                resolve(Departments.destroy({
                     where:{
                         employeeNum: empNum
                     }}));
@@ -310,7 +310,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
 module.exports.deleteEmployeeById = function(id) {
     return new Promise(function(resolve, reject) {
         sequelize.sync().then(() => {
-                resolve(Employee.destroy({
+                resolve(Employees.destroy({
                     where:{
                         employeeNum: empNum
                     }}));
@@ -320,9 +320,4 @@ module.exports.deleteEmployeeById = function(id) {
     });
 }
 
-    module.exports.getManagers = function () {
-        return new Promise(function (resolve, reject) {
-            reject();
-            });
-            
-    };
+  
