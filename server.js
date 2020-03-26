@@ -113,10 +113,10 @@ app.get("/about", function(req, res){
 app.get("/employees/add", (req,res)=>{
     data.getDepartments()
     .then((data)=>{
-        res.render("addEmployee", {Departments: data});
+        res.render("addEmployee", {Department: data});
     })
     .catch(()=>{
-        res.render("addEmployee", {Departments: []}) 
+        res.render("addEmployee", {Department: []}) 
     });
 });
 
