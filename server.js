@@ -142,7 +142,7 @@ app.post("/departments/add", function(req, res) {
 });
 
 // setup a post 'route' to update department
-app.post("/departments/update", (req, res) => {
+app.post("/department/update", (req, res) => {
     data.updateDepartment(req.body)
     .then(()=>{res.redirect("/departments");})
     .catch( ()=>{

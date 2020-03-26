@@ -261,12 +261,12 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
         });
     };
     
-    /*module.exports.updateDepartment = function(departmentData){
+    module.exports.updateDepartment = function(departmentData){
         return new Promise(function (resolve, reject) {
             for (const prop in departmentData) {
                 if (departmentData[prop] == "") departmentData[prop] = null;
             };
-            Department.update(
+            Departments.update(
             {
                 departmentId: departmentData.departmentId,
                 departmentName: departmentData.departmentName
@@ -276,36 +276,15 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             })
             .then(()=>{
                 console.log("successfully update a department");
-                resolve(Department);
+                resolve(Departments);
             })
             .catch(()=>{
                 reject("unable to update department");
             });   
         });
-    };*/
+    };
 
-    module.exports.updateDepartment = function(departmentData) {
-        return new Promise(function(resolve, reject) {
-            sequelize.sync().then(() => {
-                for(let i in departmentData){
-                    if(departmentData[i] == "") {
-                        departmentData[i] = null;
-                    }
-                }
-                Department.update({
-                    departmentName: departmentData.departmentName
-                }, { where: {
-                    departmentId: departmentData.departmentId
-                }}).then(() =>{
-                    resolve(Department);
-                }).catch((err) => {
-                    reject("unable to update department");
-                });
-            }).catch(() => {
-                reject("unable to update department");
-            });
-        });
-    }
+    
 
     module.exports.deleteDepartmentById = function(id) {
         return new Promise(function(resolve, reject) {
