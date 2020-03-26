@@ -131,6 +131,19 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             })
         });
     };
+
+    module.exports.getDepartments = function(){
+        return new Promise(function (resolve, reject) {
+            Department.findAll()
+            .then((data)=>{
+                resolve(data);
+            })
+            .catch(()=>{
+                reject("no department returned");
+            });   
+        });
+    };
+    
     
     module.exports.addEmployee = function(employeeData){
         return new Promise(function (resolve, reject) {
@@ -157,7 +170,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             })
             .then(()=>{
                 console.log("successfully created a new employee");
-                resolve(Employee[1]);
+                resolve(Employee);
             })
             .catch(()=>{
                 reject("unable to create employee");
@@ -216,17 +229,6 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
         })
     }
     
-    module.exports.getDepartments = function(){
-        return new Promise(function (resolve, reject) {
-            Department.findAll()
-            .then((data)=>{
-                resolve(data);
-            })
-            .catch(()=>{
-                reject("no department returned");
-            });   
-        });
-    };
     
     module.exports.getDepartmentById = function (num){
         return new Promise(function (resolve, reject) {
