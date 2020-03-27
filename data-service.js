@@ -263,7 +263,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
         });
     };
     
-    /*module.exports.updateDepartment = function(departmentData){
+    module.exports.updateDepartment = function(departmentData){
         return new Promise(function (resolve, reject) {
             for (const prop in departmentData) {
                 if (departmentData[prop] == "") departmentData[prop] = null;
@@ -284,18 +284,8 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
                 reject("unable to update department");
             });   
         });
-    };*/
-    module.exports.updateDepartment = function(departmentData){
-        for(prop in departmentData){
-            if(prop=="") prop=null;
-        }
-        return new Promise((resolve, reject) => {
-            Department.update(departmentData,{where:{departmentId: departmentData.departmentId}}) 
-            .then(()=>resolve(Department.update(departmentData,{where:{departmentId: departmentData.departmentId}})))
-            .catch(()=>reject("unable to update department"))
-        });
     };
-
+    
     
 
     module.exports.deleteDepartmentById = function(id) {
@@ -303,7 +293,8 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             sequelize.sync().then(() => {
                     resolve(Department.destroy({
                         where:{
-                            employeeNum: empNum
+                            //employeeNum: empNum
+                            employeeNum: id
                         }}));
             }).catch((err) => {
                 reject();
