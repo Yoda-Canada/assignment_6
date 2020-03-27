@@ -75,63 +75,7 @@ var sequelize = new Sequelize('dc7lj9uq5kn7ar', 'hbdkntvqvfoasm', '555fd058fdb17
             });   
         });
     };
-    /*
-    module.exports.getEmployeesByStatus = function (status){
-        return new Promise(function (resolve, reject) {
-            Employee.findAll({
-                where:{status:status}
-            })
-            .then((data)=>{
-                resolve(data);
-            })
-            .catch(()=>{
-                reject("no employee returned");
-            })
-        });
-    };
-    
-    module.exports.getEmployeesByDepartment = function (department){
-        return new Promise(function (resolve, reject) {
-            Employee.findAll({
-                where:{department:department}
-            })
-            .then((data)=>{
-                resolve(data);
-            })
-            .catch(()=>{
-                reject("no employee returned");
-            })
-        });
-    };
-    
-    module.exports.getEmployeesByManager = function (manager){
-        return new Promise(function (resolve, reject) {
-            Employee.findAll({
-                where:{employeeManagerNum:manager}
-            })
-            .then((data)=>{
-                resolve(data);
-            })
-            .catch(()=>{
-                reject("no employee returned");
-            })
-        });
-    };
-    
-    module.exports.getEmployeeByNum = function (num){
-        return new Promise(function (resolve, reject) {
-            Employee.findAll({
-                where:{employeeNum:num}
-            })
-            .then((data)=>{
-                resolve(data[0]);
-            })
-            .catch(()=>{
-                reject("no employee returned");
-            })
-        });
-    };
-*/
+   
 module.exports.getEmployeesByStatus = function(status){
     return new Promise((resolve, reject) => {
         Employee.findAll({
@@ -144,7 +88,7 @@ module.exports.getEmployeesByStatus = function(status){
                 status: status
             }
         })))
-        .catch(()=>reject("no results returned")) 
+        .catch(()=>reject("no employee returned")) 
     });
 }
 
@@ -160,7 +104,7 @@ module.exports.getEmployeesByDepartment = function(department){
                 department: department
             }
         })))
-        .catch(()=>reject("no results returned")) 
+        .catch(()=>reject("no employee returned")) 
     });
 }
 
@@ -176,7 +120,7 @@ module.exports.getEmployeesByManager = function(manager){
                 employeeManagerNum: manager
             }
         })))
-        .catch(()=>reject("no results returned")) 
+        .catch(()=>reject("no employee returned")) 
     });
 }
 
@@ -192,7 +136,7 @@ module.exports.getEmployeeByNum = function(num){
                 employeeNum: num
             }
         })))
-        .catch(()=>reject("no results returned")) 
+        .catch(()=>reject("no employee returned")) 
     });
 }
     
@@ -293,7 +237,7 @@ module.exports.getEmployeeByNum = function(num){
         });
     };
     
-    module.exports.getDepartmentById = function (num){
+    /*module.exports.getDepartmentById = function (num){
         return new Promise(function (resolve, reject) {
             Department.findAll({
                 where:{departmentId:num}
@@ -305,7 +249,22 @@ module.exports.getEmployeeByNum = function(num){
                 reject("no department returned");
             })
         });
-    };
+    };*/
+    exports.getDepartmentById = function(id){
+        return new Promise((resolve, reject) => {
+           Department.findAll({
+                where:{
+                    departmentId: id
+                }
+            })
+            .then(()=>resolve(Department.findAll({
+                where:{
+                    departmentId: id
+                }
+            })))
+            .catch(()=>reject("no department returned")) 
+        });
+    }
     
     module.exports.addDepartment = function(departmentData){
         return new Promise(function (resolve, reject) {
