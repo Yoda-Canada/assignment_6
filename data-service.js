@@ -237,20 +237,8 @@ module.exports.getEmployeeByNum = function(num){
         });
     };
     
-    /*module.exports.getDepartmentById = function (num){
-        return new Promise(function (resolve, reject) {
-            Department.findAll({
-                where:{departmentId:num}
-            })
-            .then((data)=>{
-                resolve(data[0]);
-            })
-            .catch(()=>{
-                reject("no department returned");
-            })
-        });
-    };*/
-    exports.getDepartmentById = function(id){
+   
+    module.exports.getDepartmentById = function(id){
         return new Promise((resolve, reject) => {
            Department.findAll({
                 where:{
