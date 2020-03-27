@@ -210,7 +210,7 @@ app.get("/employees",(req,res)=>{
     // loop through viewData.departments and once we have found the departmentId that matches
     // the employee's "department" value, add a "selected" property to the matching
     // viewData.departments object
-    for (let i = 0; i < viewData.Department.length; i++) {
+    for (let i = 0; i < viewData.department.length; i++) {
     if (viewData.department[i].departmentId == viewData.employee.department) {
         viewData.department[i].selected = true;
     }
