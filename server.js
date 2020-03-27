@@ -113,10 +113,10 @@ app.get("/about", function(req, res){
 app.get("/employees/add", (req,res)=>{
     data.getDepartments()
     .then((data)=>{
-        res.render("addEmployee", {Department: data});
+        res.render("addEmployee", {departments: data});
     })
     .catch(()=>{
-        res.render("addEmployee", {Department: []}) 
+        res.render("addEmployee", {departments: []}) 
     });
 });
 
@@ -192,32 +192,34 @@ app.get("/employees",(req,res)=>{
 
 
    app.get("/employee/:num", (req, res) => {
+
     // initialize an empty object to store the values
     let viewData = {};
     data.getEmployeeByNum(req.params.num).then((data) => {
+
     if (data) {
-    viewData.employee = data; //store employee data in the "viewData" object as "employee"
+        viewData.employee = data; //store employee data in the "viewData" object as "employee"
     } else {
-    viewData.employee = null; // set employee to null if none were returned
+        viewData.employee = null; // set employee to null if none were returned
     }
     }).catch(() => {
-    viewData.employee = null; // set employee to null if there was an error
+        viewData.employee = null; // set employee to null if there was an error
     }).then(data.getDepartments)
     .then((data) => {
-    viewData.departments = data; // store department data in the "viewData" object as "departments"
+        viewData.departments = data; // store department data in the "viewData" object as "departments"
     // loop through viewData.departments and once we have found the departmentId that matches
     // the employee's "department" value, add a "selected" property to the matching
     // viewData.departments object
     for (let i = 0; i < viewData.departments.length; i++) {
     if (viewData.departments[i].departmentId == viewData.employee.department) {
-    viewData.departments[i].selected = true;
+        viewData.departments[i].selected = true;
     }
     }
     }).catch(() => {
-    viewData.departments = []; // set departments to empty if there was an error
+        viewData.departments = []; // set departments to empty if there was an error
     }).then(() => {
     if (viewData.employee == null) { // if no employee - return an error
-    res.status(404).send("Employee Not Found");
+        res.status(404).send("Employee Not Found");
     } else {
     res.render("employee", { viewData: viewData }); // render the "employee" view
     }
@@ -232,7 +234,7 @@ app.get("/employees",(req,res)=>{
     .then((data)=>{
         if(data==null)
             res.status(404).send("Department not found");
-        else{res.render("department",{department:data}); }
+        else{res.render("department",{departments:data}); }
     })
     .catch(()=>{
         res.status(404).send("Department Not Found"); 
