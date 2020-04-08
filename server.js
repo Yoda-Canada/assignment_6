@@ -17,6 +17,7 @@ var path=require("path");
 var filesystem=require("fs");
 var data=require("./data-service.js");
 var exphbs=require("express-handlebars");
+var dataServiceAuth = require("./data-service-auth.js");
 var HTTP_PORT=process.env.PORT||8080;
 
 app.use(express.static('public'));
