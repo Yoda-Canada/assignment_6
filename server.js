@@ -28,6 +28,18 @@ function onHttpStart(){
     console.log("Express http server listening on: "+HTTP_PORT);
 }
 
+app.use(clientSessions({
+    cookieName: "session",
+    secret:"web322_a6",
+    duration: 2*60*1000,
+    activeDuration: 60*1000
+}));
+
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
+
 app.engine('.hbs', exphbs({
     extname: '.hbs',
     defaultLayout:'main',
@@ -40,11 +52,11 @@ app.engine('.hbs', exphbs({
 
            equal: function (lvalue, rvalue, options) {
             if (arguments.length < 3)
-            throw new Error("Handlebars Helper equal needs 2 parameters");
+                throw new Error("Handlebars Helper equal needs 2 parameters");
             if (lvalue != rvalue) {
-            return options.inverse(this);
+                return options.inverse(this);
             } else {
-            return options.fn(this);
+                return options.fn(this);
             }
            }         
     }
