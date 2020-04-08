@@ -28,6 +28,36 @@ module.exports.initialize = function () {
         });
     });
 };
+
+module.exports.registerUser = function (userData) {
+    return new Promise((resolve, reject) => {
+        if (userData.password != userData.password2) {
+            reject("Passwords don't match");
+        } else {
+            bcrypt.genSalt(10, function (err, salt) {
+                bcrypt.hash(userData.password, salt, function (err, hash) {
+                    if (err) {
+                        reject("There was an error encrypting the password")
+                    } else {
+                        userData.password = hash;
+                        var newUser = new User(userData);
+                        newUser.save((err) => {
+                            if (err) {
+                                if (err.code == 11000) {
+                                    reject("Username already taken");
+                                } else {
+                                    reject("Cannot create a new user: " + err.message);
+                                }
+                            } else {
+                                resolve();
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    });
+}
 /*
 module.exports.registerUser = function (userData){
     return new Promise(function (resolve, reject) {
