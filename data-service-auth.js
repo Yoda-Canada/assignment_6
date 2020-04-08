@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Schema  = mongoose.Schema;
-var bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 var userSchema = new Schema({
     "userName":{
         "type": String,
@@ -29,8 +29,9 @@ module.exports.initialize = function () {
     });
 };
 
-/*
+
 module.exports.registerUser = function (userData){
+
     return new Promise(function (resolve, reject) {
         if( userData.password != userData.password2 ){
             reject ("Passwords do not match");
@@ -64,4 +65,3 @@ module.exports.registerUser = function (userData){
     });
 }
 
-*/
