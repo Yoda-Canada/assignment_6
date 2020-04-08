@@ -285,14 +285,14 @@ app.use((req, res)=>{
 });
 
 
-
+/*
 data.initialize().then(()=>{
     app.listen(HTTP_PORT, onHttpStart);
 }).catch(err=>{
     console.log(err);
 })
+*/
 
-/*
 data.initialize()
 .then(dataServiceAuth.initialize)
 .then(function(){
@@ -302,4 +302,3 @@ data.initialize()
 }).catch(function(err){
  console.log("unable to start server: " + err);
 });
-*/
