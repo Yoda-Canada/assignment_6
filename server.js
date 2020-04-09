@@ -25,7 +25,7 @@ app.use(express.static('public'));
 
 
 function onHttpStart(){
-    console.log("Express http server listening on: "+HTTP_PORT);
+    console.log("Express http server listening on: "+ HTTP_PORT);
 }
 
 app.use(clientSessions({
@@ -70,6 +70,15 @@ app.use(function(req,res,next){
     next();
     });
 
+    function ensureLogin (req, res, next){
+        if (!(req.session.user)){
+            res.redirect("/login");
+        }
+        else{
+            next();
+        }
+    }
+
 var imagePath="./public/images/uploaded"
 const storage=multer.diskStorage({
 
@@ -84,7 +93,7 @@ const storage=multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.get("/images", function(req, res){
+app.get("/images", ensureLogin, function(req, res){
 
     filesystem.readdir(path.join(__dirname, imagePath), (err, items)=>{
         var img={images:[]};
@@ -97,21 +106,23 @@ app.get("/images", function(req, res){
 });
 
 
-app.post("/images/add", upload.single("imageFile"), (req, res) => {
+app.post("/images/add", ensureLogin, upload.single("imageFile"), (req, res) => {
     res.redirect("/images");
   });
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post("/employees/add", function(req, res){
+app.post("/employees/add", ensureLogin, function(req, res){
     data.addEmployee(req.body)
     .then(()=> {
       res.redirect("/employees");
     });
 });
 
-
+app.get("/home",(req,res)=>{
+    res.render('home');
+});
   
 
 app.get("/", function(req, res){
@@ -124,7 +135,50 @@ app.get("/about", function(req, res){
     res.render("about");
 });
 
-app.get("/employees/add", (req,res)=>{
+app.get("/login", (req,res)=>{
+    res.render("login");
+});
+
+app.get("/register", (req,res)=>{
+    res.render("register");
+});
+
+app.post("/login", (req, res)=>{
+    req.body.userAgent = req.get('User-Agent');
+    dataServiceAuth.checkUser(req.body)
+    .then((user)=>{
+        req.session.user = {
+            userName: get_user.userName,
+            email: user.email,
+            loginHistory: user.loginHistory
+        };
+        res.redirect('/employees');       
+    })
+    .catch((err)=>{
+        res.render("login",{errorMessage: err, userName: req.body.userName} );
+    });
+});
+
+app.post("/register", (req,res)=>{
+    dataServiceAuth.registerUser(req.body)
+    .then(()=>{
+        res.render("register", {successMessage: "User created"});
+    })
+    .catch((err)=>{
+        res.render("register",{errorMessage: err, userName: JSON.stringify(req.body.userName)});
+    })
+});
+
+app.get("/logout", (req, res)=>{
+    req.session.reset();
+    res.redirect("/");
+})
+
+app.get("/userHistory", ensureLogin, (req, res)=>{
+    res.render("userHistory",{user: req.session.user});
+});
+
+app.get("/employees/add", ensureLogin, (req,res)=>{
     data.getDepartments()
     .then((data)=>{
         res.render("addEmployee", {department: data});
@@ -134,18 +188,18 @@ app.get("/employees/add", (req,res)=>{
     });
 });
 
-app.get("/images/add", (req, res)=>{
+app.get("/images/add", ensureLogin, (req, res)=>{
     //res.sendFile(path.join(__dirname, "/views/addImage.html"))
     res.render("addImage");
 });
 
 // setup a get 'route' to display add department web site
-app.get("/departments/add",  (req,res)=>{
+app.get("/departments/add", ensureLogin, (req,res)=>{
     res.render('addDepartment');
 });
 
 // setup a post 'route' to add department
-app.post("/departments/add", function(req, res) {
+app.post("/departments/add", ensureLogin, function(req, res) {
     data.addDepartment(req.body) 
     .then(()=>{
         res.redirect("/departments");
@@ -156,7 +210,7 @@ app.post("/departments/add", function(req, res) {
 });
 
 // setup a post 'route' to update department
-app.post("/department/update", (req, res) => {
+app.post("/department/update", ensureLogin, (req, res) => {
     data.updateDepartment(req.body)
     .then(()=>{res.redirect("/departments");})
     .catch( ()=>{
@@ -164,7 +218,7 @@ app.post("/department/update", (req, res) => {
     })
 });
 
-app.get("/employees",(req,res)=>{
+app.get("/employees", ensureLogin, (req,res, Employees)=>{
     if(req.query.status){
         data.getEmployeesByStatus(req.query.status).then((data)=>{
         if(data.length>0)
@@ -205,7 +259,7 @@ app.get("/employees",(req,res)=>{
 });
 
 
-   app.get("/employee/:num", (req, res) => {
+   app.get("/employee/:num", ensureLogin, (req, res, data) => {
 
     // initialize an empty object to store the values
     let viewData = {};
@@ -242,7 +296,7 @@ app.get("/employees",(req,res)=>{
     })
    });
 
-  app.get("/department/:num", (req,res)=>{
+  app.get("/department/:num", ensureLogin, (req,res)=>{
     var num = req.params.num;
     data.getDepartmentById(num)
     .then((data)=>{
@@ -257,7 +311,7 @@ app.get("/employees",(req,res)=>{
 
   
 
-  app.post("/employee/update", (req, res) => {
+  app.post("/employee/update", ensureLogin, (req, res) => {
     
     data.updateEmployee(req.body)
         .then(() => {
@@ -268,7 +322,7 @@ app.get("/employees",(req,res)=>{
         })
   });
 
-  app.get("/employees/delete/:num", (req,res)=>{
+  app.get("/employees/delete/:num",ensureLogin, (req,res)=>{
     var num = req.params.num;
     data.deleteEmployeeByNum(num)
     .then(()=>{
@@ -281,7 +335,7 @@ app.get("/employees",(req,res)=>{
   
    
 
-app.get("/departments",(req,res)=>{
+app.get("/departments", ensureLogin, (req,res, Departments)=>{
     data.getDepartments().then((data)=>{
         if (data.length > 0)
             res.render("departments", {department: data.map(value=>value.dataValues)});
