@@ -67,7 +67,7 @@ module.exports.registerUser = function (userData){
 
 module.exports.checkUser = function (userData){
     return new Promise(function (resolve, reject){
-        User.find({userName: userData.userName})
+        User.find({user: userData.userName})
         .exec()
         .then((users)=>{
             bcrypt.compare(userData.password, users[0].password )
