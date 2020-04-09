@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Schema  = mongoose.Schema;
-//const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 var userSchema = new Schema({
     "userName":{
         "type": String,
@@ -64,7 +64,7 @@ module.exports.registerUser = function (userData){
         }
     });
 }
-/*
+
 module.exports.checkUser = function (userData){
     return new Promise(function (resolve, reject){
         User.find({userName: userData.userName})
@@ -93,4 +93,3 @@ module.exports.checkUser = function (userData){
         });
     });
 }
-*/
