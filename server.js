@@ -218,7 +218,7 @@ app.post("/department/update", ensureLogin, (req, res) => {
     })
 });
 
-app.get("/employees", ensureLogin, (req,res, Employees)=>{
+app.get("/employees", ensureLogin, (req,res)=>{
     if(req.query.status){
         data.getEmployeesByStatus(req.query.status).then((data)=>{
         if(data.length>0)
@@ -259,7 +259,7 @@ app.get("/employees", ensureLogin, (req,res, Employees)=>{
 });
 
 
-   app.get("/employee/:num", ensureLogin, (req, res, data) => {
+   app.get("/employee/:num", ensureLogin, (req, res) => {
 
     // initialize an empty object to store the values
     let viewData = {};
@@ -335,7 +335,7 @@ app.get("/employees", ensureLogin, (req,res, Employees)=>{
   
    
 
-app.get("/departments", ensureLogin, (req,res, Departments)=>{
+app.get("/departments", ensureLogin, (req,res)=>{
     data.getDepartments().then((data)=>{
         if (data.length > 0)
             res.render("departments", {department: data.map(value=>value.dataValues)});
