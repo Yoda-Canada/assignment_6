@@ -22,11 +22,11 @@ const clientSessions = require("client-sessions");
 var HTTP_PORT=process.env.PORT||8080;
 
 app.use(express.static('public'));
-
+app.use(bodyParser.urlencoded({ extended: true }) );
 
 function onHttpStart(){
-    console.log("Express http server listening on: "+ HTTP_PORT);
-}
+    console.log("Express http server listening on " + HTTP_PORT);
+};
 
 app.use(clientSessions({
     cookieName: "session",

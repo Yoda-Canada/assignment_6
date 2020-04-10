@@ -65,6 +65,51 @@ module.exports.registerUser = function (userData){
     });
 }
 
+module.exports.checkUser=function(userData) {
+    return new Promise(function (resolve, reject) {
+        User.find({ userName: userData.userName }).exec()
+        .then((users) => {
+            if (users.length == 0) {
+                reject("Unable to find username: " + userData.userName);
+            } else {
+                bcrypt.compare(userData.password, users[0].password, function (err, res) {
+                    if (res === true) {
+                        if (users[0].loginHistory == null)
+                            users[0].loginHistory = []; // make array if none exists (first login)
+
+                        users[0].loginHistory.push({ 
+                            dateTime: (new Date()).toString(),
+                            userAgent: userData.userAgent
+                        });
+                        
+                        // using updateOne instead of update
+                        User.updateOne({ userName: users[0].userName },
+                            { $set: { loginHistory: users[0].loginHistory } }
+                        ).exec()
+                        .then(function() { 
+                            resolve(users[0]);
+                        })
+                        .catch(function(err) { 
+                            reject("There was an error verifying the username: " + err);
+                        });
+                    } else if (res === false) {
+                        reject("Unable to find username: " + userData.userName);
+                    }
+                });
+            }
+        })
+        .catch(function() {
+            reject("Unable to find user: " + userData.userName);
+        }); 
+    })
+}
+
+
+
+
+
+
+/*
 module.exports.checkUser = function (userData){
     return new Promise(function (resolve, reject){
         User.find({user: userData.userName})
@@ -93,3 +138,4 @@ module.exports.checkUser = function (userData){
         });
     });
 }
+*/
