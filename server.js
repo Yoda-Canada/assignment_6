@@ -54,6 +54,16 @@ app.use(clientSessions({
     activeDuration: 60*1000
 }));
 
+data.initialize()
+.then(dataServiceAuth.initialize)
+.then(function(){
+    app.listen(HTTP_PORT, function(){
+        console.log("app listening on: " + HTTP_PORT)
+    });
+}).catch(function(err){
+    console.log("unable to start server: " + err);
+});
+
 const storage=multer.diskStorage({
 
     destination:  "./public/images/uploaded",    
@@ -76,16 +86,6 @@ app.use(function(req, res, next) {
 app.use((req, res) => {
     res.status(404).send("Page Not Found");
   });
-
-data.initialize()
-.then(dataServiceAuth.initialize)
-.then(function(){
-    app.listen(HTTP_PORT, function(){
-        console.log("app listening on: " + HTTP_PORT)
-    });
-}).catch(function(err){
-    console.log("unable to start server: " + err);
-});
 
 
 function ensureLogin (req, res, next){

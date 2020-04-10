@@ -33,109 +33,82 @@ module.exports.initialize = function () {
 module.exports.registerUser = function (userData){
 
     return new Promise(function (resolve, reject) {
-        if( userData.password != userData.password2 ){
-            reject ("Passwords do not match");
-        }
-        else{        
-            let newUser = new User(userData);
-            bcrypt.genSalt(10, function(err, salt) {
-                bcrypt.hash(userData.password, salt, function(err, hash) {
-                    if (err){
+
+        if (userData.password != userData.password2) {
+            reject("Passwords do not match");
+        } else {
+
+            bcrypt.genSalt(10, function (err, salt) { // Generate a "salt" using 10 rounds
+                if (err) {
                         reject("There was an error encrypting the password");
-                    }
-                    else{
-                        newUser.password = hash;
-                        newUser.save()
-                        .then(()=>{
-                            resolve();
-                        })
-                        .catch( (err)=>{
-                            if (err.code == 11000){
-                                reject("User Name already taken");                 
-                            }
-                            else{
-                                reject("There was an error creating the user: err"+err);
-                            }
-                        }); 
-                    }
-                });
+                }else{
+
+                    bcrypt.hash(userData.password, salt, function (err, hash) { // encrypt the password: userData.password
+
+                        if (err) {
+                            reject("There was an error encrypting the password");
+                        } else {
+
+                            userData.password = hash;
+
+                            let newUser = new User(userData);
+                            
+                            newUser.save((err) => {
+                                if (err) {
+                                    if (err.code == 11000){
+                                        reject("User Name already taken");
+                                    } else {
+                                        reject("There was an error creating the user: " + err);
+                                    }
+
+                                } else {
+                                    resolve();
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+};
+
+module.exports.checkUser = function(userData){
+    return new Promise(function (resolve, reject) {
+
+        User.find({ userName: userData.userName})
+            .exec()
+            .then((users) => {
+                if(users.length == 0){
+                    reject("Unable to find user: " + userData.userName);
+                }else{
+
+                    bcrypt.compare(userData.password, users[0].password).then((res) => {
+                        if(res === true){
+                            users[0].loginHistory.push({dateTime: (new Date()).toString(), userAgent: userData.userAgent});
+
+                            User.update({ userName: users[0].userName },
+                                { $set: { loginHistory: users[0].loginHistory } },
+                                { multi: false })
+                            .exec()
+                            .then(() => { 
+                                resolve(users[0]);
+                            })
+                            .catch((err) => { 
+                                reject("There was an error verifying the user: " + err);
+                            });
+                        }else{
+                            reject("Incorrect Password for user: " + userData.userName);
+                        }
+                    });
+                }
+            }).catch((err) => {
+                reject("Unable to find user: " + userData.userName);
             });
 
-        }
-    });
-}
-
-module.exports.checkUser=function(userData) {
-    return new Promise(function (resolve, reject) {
-        User.find({ userName: userData.userName }).exec()
-        .then((users) => {
-            if (users.length == 0) {
-                reject("Unable to find username: " + userData.userName);
-            } else {
-                bcrypt.compare(userData.password, users[0].password, function (err, res) {
-                    if (res === true) {
-                        if (users[0].loginHistory == null)
-                            users[0].loginHistory = []; // make array if none exists (first login)
-
-                        users[0].loginHistory.push({ 
-                            dateTime: (new Date()).toString(),
-                            userAgent: userData.userAgent
-                        });
-                        
-                        // using updateOne instead of update
-                        User.updateOne({ userName: users[0].userName },
-                            { $set: { loginHistory: users[0].loginHistory } }
-                        ).exec()
-                        .then(function() { 
-                            resolve(users[0]);
-                        })
-                        .catch(function(err) { 
-                            reject("There was an error verifying the username: " + err);
-                        });
-                    } else if (res === false) {
-                        reject("Unable to find username: " + userData.userName);
-                    }
-                });
-            }
-        })
-        .catch(function() {
-            reject("Unable to find user: " + userData.userName);
-        }); 
-    })
-}
+     });
+};
 
 
 
 
-
-
-/*
-module.exports.checkUser = function (userData){
-    return new Promise(function (resolve, reject){
-        User.find({user: userData.userName})
-        .exec()
-        .then((users)=>{
-            bcrypt.compare(userData.password, users[0].password )
-            .then((res) => {
-                users[0].loginHistory.push({dateTime: (new Date()).toString(), userAgent: userData.userAgent});
-                User.update({ userName: users[0].userName},
-                            { $set: { loginHistory: users[0].loginHistory } },
-                            { multi: false })
-                .exec()
-                .then( ()=>{
-                    resolve(users[0]);
-                })
-                .catch((err)=>{
-                    reject("There was an error verifying the user: " + err);
-                });
-            })
-            .catch((err)=>{
-                reject("Incorrect Password for user: " + userData.userName);
-            })  
-        })
-        .catch((err)=>{
-            reject("Unable to find user: " + userData.userName);
-        });
-    });
-}
-*/
