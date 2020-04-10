@@ -9,6 +9,7 @@
 * Online (Heroku) Link: __https://limitless-castle-61207.herokuapp.com/_
 *
 ********************************************************************************/ 
+var HTTP_PORT=process.env.PORT||8080;
 var express = require("express");
 var multer=require("multer");
 var bodyParser = require('body-parser')
@@ -19,7 +20,7 @@ var data=require("./data-service.js");
 var exphbs=require("express-handlebars");
 var dataServiceAuth = require("./data-service-auth.js");
 const clientSessions = require("client-sessions");
-var HTTP_PORT=process.env.PORT||8080;
+
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }) );
