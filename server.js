@@ -348,54 +348,7 @@ app.get("/userHistory", ensureLogin, (req, res)=>{
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-
-app.get("/home",(req,res)=>{
-    res.render('home');
-});
-  
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-  
-
-
-
- 
-   
-
-
-
 app.use((req, res)=>{
     res.status(404).send("404 Page");
 });
 
-
-/*
-data.initialize().then(()=>{
-    app.listen(HTTP_PORT, onHttpStart);
-}).catch(err=>{
-    console.log(err);
-})
-*/
-
-data.initialize()
-.then(dataServiceAuth.initialize)
-.then(function(){
- app.listen(HTTP_PORT, function(){
- console.log("app listening on: " + HTTP_PORT)
- });
-}).catch(function(err){
- console.log("unable to start server: " + err);
-});
